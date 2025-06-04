@@ -14,7 +14,7 @@ func introduction() {
 	fmt.Println("Versão do programa:", float32(version))
 }
 
-func serverWeb() {
+func serverWeb() { // Função para monitorar o servidor web, onde o usuário informa o site a ser monitorado
 	fmt.Println(("Digita o site a ser monitorado (exemplo: https://www.google.com):"))
 	var site string
 	fmt.Scan(&site)
