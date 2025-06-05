@@ -3,7 +3,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 5
 
 func introduction() {
 	fmt.Println("Bem vindo ao programa de monitoramento de sites!, Por favor, digite seu nome para continuar:")
@@ -17,8 +21,13 @@ func introduction() {
 func serverWeb() { // Função para monitorar o servidor web, onde o usuário informa o site a ser monitorado
 	fmt.Println(("Digita o site a ser monitorado (exemplo: https://www.google.com):"))
 	site := []string{"https://www.google.com", "https://instagram.com.br", "https://facebook.com"} // Slice de strings para armazenar o site a ser monitorado - É um array dinâmico, que pode crescer ou diminuir conforme necessário
-	for _, site := range site {                                                                    // Loop para percorrer o slice de sites e imprimir cada um deles
-		testSite(site) // Chama a função testSite para verificar se o site está ativo
+	for i := 0; i < monitoramentos; i++ {                                                          // Loop para percorrer o slice de sites e imprimir cada um deles
+		for _, site := range site { // Loop para percorrer o slice de sites e imprimir cada um deles
+			testSite(site) // Chama a função testSite para verificar se o site está ativo
+		}
+		fmt.Println("Aguardando 5 segundos para verificar novamente os sites...") // Mensagem informando que o programa está aguardando 5 segundos para verificar novamente os sites
+		fmt.Println("")
+		time.Sleep(delay * time.Second) // Aguarda 5 segundos antes de verificar novamente o site
 	}
 }
 func testSite(site string) { // Função para testar se o site está ativo, onde o usuário informa o site a ser monitorado
@@ -27,6 +36,7 @@ func testSite(site string) { // Função para testar se o site está ativo, onde
 	if resp.StatusCode == 200 {
 		fmt.Println("Site carregado com sucesso! Status: ", resp.StatusCode)
 		fmt.Println("")
+
 	} else {
 		fmt.Println("O site não foi carregado, verifique sua conexão ou se o site está ativo!")
 		fmt.Println("O site retornou o código de status:", resp.StatusCode)
