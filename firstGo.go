@@ -16,18 +16,22 @@ func introduction() {
 
 func serverWeb() { // Função para monitorar o servidor web, onde o usuário informa o site a ser monitorado
 	fmt.Println(("Digita o site a ser monitorado (exemplo: https://www.google.com):"))
-	var site string
-	fmt.Scan(&site)
+	site := []string{"https://www.google.com", "https://instagram.com.br", "https://facebook.com"} // Slice de strings para armazenar o site a ser monitorado - É um array dinâmico, que pode crescer ou diminuir conforme necessário
+	for _, site := range site {                                                                    // Loop para percorrer o slice de sites e imprimir cada um deles
+		testSite(site) // Chama a função testSite para verificar se o site está ativo
+	}
+}
+func testSite(site string) { // Função para testar se o site está ativo, onde o usuário informa o site a ser monitorado
 	fmt.Println("Monitorando o site:", site)
-	fmt.Println("Iniciando monitoramento do servidor web...")
-
 	resp, _ := http.Get(site) // Realiza uma requisição HTTP GET para o site informado pelo usuário. Ignorando o erro retornado com "_"
 	if resp.StatusCode == 200 {
-		fmt.Println("Site carregado com sucesso!")
+		fmt.Println("Site carregado com sucesso! Status: ", resp.StatusCode)
+		fmt.Println("")
 	} else {
 		fmt.Println("O site não foi carregado, verifique sua conexão ou se o site está ativo!")
 		fmt.Println("O site retornou o código de status:", resp.StatusCode)
 		os.Exit(-1)
+		fmt.Println("")
 	}
 
 }
@@ -69,6 +73,18 @@ func main() {
 			os.Exit(-1)
 		}
 	}
-	// fmt.Scanf("%d", &comando) - Leitura do comando do usuário e salva na variável comando (alocado no endereço de memória)
-	//& endereço da variável comando, para que o valor lido seja armazenado nela
 }
+
+// func Sites() {
+// 	sites := []string{} // Slice de strings para armazenar os sites a serem monitorados - É um array dinâmico, que pode crescer ou diminuir conforme necessário
+// 	fmt.Println("Digite os sites a serem monitorados (digite 'sair' para finalizar):")
+// 	for {
+// 		var site string
+// 		fmt.Scan(&site)
+// 		if site == "sair" {
+// 			break // Sai do loop se o usuário digitar "sair"
+// 		}
+// 		sites = append(sites, site) // Adiciona o site ao slice
+// 		fmt.Println("Site adicionado:", site)
+// 	}
+// }
